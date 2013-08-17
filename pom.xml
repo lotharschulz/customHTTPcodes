@@ -41,15 +41,6 @@
             <version>${project.spring.version}</version>
         </dependency>
 
-        <!--
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${project.spring.version}</version>
-            <scope>test</scope> < ! - - provided - - >
-        </dependency>
-            -->
-
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
