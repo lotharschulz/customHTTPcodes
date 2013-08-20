@@ -2,19 +2,22 @@ package info.lotharschulz.item.controller;
 
 
 import info.lotharschulz.item.controller.exception.BadRequestException;
-import info.lotharschulz.item.model.data.exception.ItemAlreadyExistsException;
 import info.lotharschulz.item.controller.exception.ResourceNotFoundException;
 import info.lotharschulz.item.model.Item;
 import info.lotharschulz.item.model.RESTItem;
+import info.lotharschulz.item.model.data.exception.ItemAlreadyExistsException;
 import info.lotharschulz.item.service.ItemService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @Controller
@@ -29,7 +32,6 @@ public class ItemController{
     public
     @ResponseBody
     RESTItem getItem(@PathVariable String itemID) {
-        //RESTItem img = itemService.getImagByExtId(itemID);
         RESTItem RESTItem = itemService.getItemByExternalId(itemID);
         log.debug(RESTItem);
         if (null == RESTItem) {
@@ -50,14 +52,22 @@ public class ItemController{
     @RequestMapping(value = "/{itemID}", method = RequestMethod.PUT, produces="application/json") /*  */
     public
     @ResponseBody
-    ResponseEntity addItem(@PathVariable final String itemID, @RequestBody final Item item  ) {
+    ResponseEntity addItem(@PathVariable final String itemID, @RequestBody final Item item, HttpServletRequest request  ) {
         log.debug("itemID: " + itemID + " \nitem: " + item + " \n");
         RESTItem inserted = null;
         try{
             inserted = itemService.insertItem(itemID, item);
         }catch(ItemAlreadyExistsException iaee){
             log.debug("e: " + iaee.toString() + " \n");
-            ResponseEntity re = new ResponseEntity(new HashMap<String, String>().put("Location", "/" + iaee.getExistingItemID()), HttpStatus.SEE_OTHER);
+            HttpHeaders responseHeaders = new HttpHeaders();
+            ResponseEntity re = new ResponseEntity(HttpStatus.SEE_OTHER);
+            try{
+                responseHeaders.setLocation(new URI(request.getRequestURL().toString()));
+                re = new ResponseEntity(responseHeaders, HttpStatus.SEE_OTHER);
+            }catch (URISyntaxException urise){
+                log.error("URISyntaxException: " + urise + " \n");
+                re = new ResponseEntity(HttpStatus.SEE_OTHER);
+            }
             log.debug("re: " + re + " \n");
             return re;
         }
