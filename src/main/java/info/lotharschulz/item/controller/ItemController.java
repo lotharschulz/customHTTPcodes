@@ -49,7 +49,7 @@ public class ItemController{
         return RESTItemList;
     }
 
-    @RequestMapping(value = "/{itemID}", method = RequestMethod.PUT, produces="application/json") /*  */
+    @RequestMapping(value = "/{itemID}", method = RequestMethod.PUT, produces="application/json")
     public
     @ResponseBody
     ResponseEntity addItem(@PathVariable final String itemID, @RequestBody final Item item, HttpServletRequest request  ) {
@@ -60,7 +60,7 @@ public class ItemController{
         }catch(ItemAlreadyExistsException iaee){
             log.debug("e: " + iaee.toString() + " \n");
             HttpHeaders responseHeaders = new HttpHeaders();
-            ResponseEntity re = new ResponseEntity(HttpStatus.SEE_OTHER);
+            ResponseEntity re;
             try{
                 responseHeaders.setLocation(new URI(request.getRequestURL().toString()));
                 re = new ResponseEntity(responseHeaders, HttpStatus.SEE_OTHER);
