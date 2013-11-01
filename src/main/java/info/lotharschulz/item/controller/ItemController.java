@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -35,7 +36,7 @@ public class ItemController{
         RESTItem RESTItem = itemService.getItemByExternalId(itemID);
         log.debug(RESTItem);
         if (null == RESTItem) {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException(itemID);
         }
         return RESTItem;
     }
@@ -63,7 +64,7 @@ public class ItemController{
             ResponseEntity re;
             try{
                 responseHeaders.setLocation(new URI(request.getRequestURL().toString()));
-                re = new ResponseEntity(responseHeaders, HttpStatus.SEE_OTHER);
+                re = new ResponseEntity(new HashMap<String, String>().put("Location", "/" + iaee.getExistingItemID()), HttpStatus.SEE_OTHER);
             }catch (URISyntaxException urise){
                 log.error("URISyntaxException: " + urise + " \n");
                 re = new ResponseEntity(HttpStatus.SEE_OTHER);
@@ -83,7 +84,7 @@ public class ItemController{
         RESTItem updated = itemService.updateItemByExternalID(itemID, item.getDescription(), item.getLabel());
         log.debug("RESTItem updated: " + updated + " \n");
         if (null == updated) {
-            throw new BadRequestException();
+            throw new BadRequestException(itemID);
         }
         return updated;
     }
