@@ -8,7 +8,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.testng-version>6.8</project.testng-version>
-        <project.name>exceptionExample</project.name>
+        <project.name>customHTTPcodes</project.name>
         <project.spring.version>3.2.3.RELEASE</project.spring.version>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
