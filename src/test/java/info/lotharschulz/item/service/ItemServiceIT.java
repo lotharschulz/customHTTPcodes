@@ -2,30 +2,29 @@ package info.lotharschulz.item.service;
 
 import info.lotharschulz.item.controller.ItemController;
 import org.apache.log4j.Logger;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.context.WebApplicationContext;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
-import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@Test
 @ContextConfiguration(locations = {"classpath:**/*exceptionDispatcher-servlet.xml"})
 @WebAppConfiguration
-public class ItemServiceIT {
+public class ItemServiceIT extends AbstractTestNGSpringContextTests {
 
     @Autowired private WebApplicationContext ctx;
 
@@ -35,7 +34,7 @@ public class ItemServiceIT {
     private final String descriptionLabel = "description";
     private final String labelLabel = "label";
 
-    @Before
+    @BeforeClass(dependsOnMethods={"springTestContextPrepareTestInstance"})
     public void setUp() {
         log.info("starting up IT tests");
         this.mockMvc = webAppContextSetup(ctx).alwaysDo(print()).build();
@@ -43,7 +42,7 @@ public class ItemServiceIT {
 
     @Test
     public void testServletContext() throws Exception {
-        assertNotNull(mockMvc);
+        Assert.assertNotNull(mockMvc);
     }
 
     @Test
@@ -58,7 +57,7 @@ public class ItemServiceIT {
         this.testGet(itemID, descriptionLabel, "description_2", labelLabel, "another label", "externalID");
     }
 
-    @Test
+    @Test(groups = "a")
     public void testItems() throws Exception {
         mockMvc.perform(get(basePath).accept(MediaType.APPLICATION_JSON))
                 //.andDo(print())
@@ -97,7 +96,7 @@ public class ItemServiceIT {
         ;
     }
 
-    @Test
+    @Test(groups = "b", dependsOnGroups = "a")
     public void testCreateNewResource() throws Exception {
         String itemID = "id12345678";
         String description = "lallallallalla neue description";
@@ -111,7 +110,7 @@ public class ItemServiceIT {
         this.testGet(itemID, descriptionLabel, description, labelLabel, label, "externalID");
     }
 
-    @Test
+    @Test(groups = "b", dependsOnGroups = "a")
     public void testUpdateExistingResource() throws Exception {
         String itemID = "id123";
 
