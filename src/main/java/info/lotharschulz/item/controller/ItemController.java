@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -64,7 +63,8 @@ public class ItemController{
             ResponseEntity re;
             try{
                 responseHeaders.setLocation(new URI(request.getRequestURL().toString()));
-                re = new ResponseEntity(new HashMap<String, String>().put("Location", "/" + iaee.getExistingItemID()), HttpStatus.SEE_OTHER);
+                log.debug("responseHeaders: " + responseHeaders + " \n");
+                re = new ResponseEntity(responseHeaders, HttpStatus.SEE_OTHER);
             }catch (URISyntaxException urise){
                 log.error("URISyntaxException: " + urise + " \n");
                 re = new ResponseEntity(HttpStatus.SEE_OTHER);
