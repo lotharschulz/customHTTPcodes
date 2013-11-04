@@ -6,15 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.context.WebApplicationContext;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.util.regex.Pattern;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -89,11 +93,27 @@ public class ItemServiceIT extends AbstractTestNGSpringContextTests {
     @Test
     public void testSeeOther() throws Exception {
         String itemID = "id123";
-        mockMvc.perform(put(basePath + "{itemID}", itemID).contentType(MediaType.APPLICATION_JSON)
-                .content("{\"label\":\"label_neu\",\"description\":\"lallallallalla neue description\"}"))
-                //.andDo(print())
-                .andExpect(status().isSeeOther())
+        MvcResult result =
+                mockMvc.perform(put(basePath + "{itemID}", itemID).contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"label\":\"label_neu\",\"description\":\"lallallallalla neue description\"}"))
+                        //.andDo(print())
+                        .andExpect(status().isSeeOther())
+                        .andReturn()
         ;
+
+        // double check implementation below once spring 3.2.4 release is out
+        // urls
+        //   https://jira.springsource.org/browse/SPR-10789?page=com.atlassian.jira.plugin.system.issuetabpanels:changehistory-tabpanel
+        //   https://github.com/spring-projects/spring-test-mvc/issues/82
+        //   http://stackoverflow.com/questions/17834034/spring-mockmvc-redirectedurl-with-pattern
+
+        MockHttpServletResponse response = result.getResponse();
+        String location = response.getHeader("Location");
+        log.debug("location: " + location + "\n" + basePath + itemID);
+        log.debug("location: " + location);
+        Pattern pattern = Pattern.compile(basePath + itemID);
+        log.debug("pattern.matcher(location).find(): " + pattern.matcher(location).find());
+        Assert.assertTrue(pattern.matcher(location).find());
     }
 
     @Test(groups = "b", dependsOnGroups = "a")
