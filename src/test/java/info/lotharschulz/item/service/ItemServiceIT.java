@@ -109,10 +109,7 @@ public class ItemServiceIT extends AbstractTestNGSpringContextTests {
 
         MockHttpServletResponse response = result.getResponse();
         String location = response.getHeader("Location");
-        log.debug("location: " + location + "\n" + basePath + itemID);
-        log.debug("location: " + location);
         Pattern pattern = Pattern.compile(basePath + itemID);
-        log.debug("pattern.matcher(location).find(): " + pattern.matcher(location).find());
         Assert.assertTrue(pattern.matcher(location).find());
     }
 
