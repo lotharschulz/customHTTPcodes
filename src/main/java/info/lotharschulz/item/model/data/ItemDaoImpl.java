@@ -1,18 +1,20 @@
 package info.lotharschulz.item.model.data;
 
+import info.lotharschulz.item.model.Item;
+import info.lotharschulz.item.model.RESTItem;
+import info.lotharschulz.item.model.data.exception.ItemAlreadyExistsException;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 /*
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 */
-import info.lotharschulz.item.model.data.exception.ItemAlreadyExistsException;
-import info.lotharschulz.item.model.Item;
-import info.lotharschulz.item.model.RESTItem;
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Repository;
 
 @Repository("ItemDao")
 public class ItemDaoImpl implements ItemDao {
@@ -23,12 +25,20 @@ public class ItemDaoImpl implements ItemDao {
     private HashMap<String, RESTItem> items = new HashMap<String, RESTItem>();
 
     public ItemDaoImpl() {
+        this.clearItems();
+        this.setup();
+    }
+
+    public void setup(){
         RESTItem RESTItem2 = new RESTItem("id123", "description", "label");
         this.items.put(RESTItem2.getExternalID(), RESTItem2);
         RESTItem2 = new RESTItem("id1234", "description_2", "another label");
         this.items.put(RESTItem2.getExternalID(), RESTItem2);
         log.debug("items: " + items.toString());
+    }
 
+    public void clearItems(){
+        this.items.clear();
     }
 
     public Map<String, RESTItem> selectAll() {
