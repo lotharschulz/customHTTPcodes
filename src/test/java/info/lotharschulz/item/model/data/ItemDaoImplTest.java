@@ -3,9 +3,7 @@ package info.lotharschulz.item.model.data;
 import info.lotharschulz.item.model.RESTItem;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.Map;
 
@@ -25,7 +23,17 @@ public class ItemDaoImplTest {
         log.info("closing down myBatis tests");
     }
 
-    @Test(groups = "a")
+    @BeforeMethod
+    public void before() {
+        imageDAO.setup();
+    }
+
+    @AfterMethod
+    public void after() {
+        imageDAO.clearItems();
+    }
+
+
     public void selectAll() throws Exception {
         Map<String,RESTItem> itemMap = imageDAO.selectAll();
         log.debug("itemMap: " + itemMap);
@@ -33,7 +41,6 @@ public class ItemDaoImplTest {
         Assert.assertEquals(itemMap.toString().trim(), expected.trim());
     }
 
-    @Test(groups = "a")
     public void selectbyExtID() throws Exception {
         RESTItem RESTItem = imageDAO.getItemByExternalId("id1234");
         log.debug("RESTItem: " + RESTItem);
@@ -41,7 +48,6 @@ public class ItemDaoImplTest {
         Assert.assertEquals(RESTItem.toString().trim(), expected.trim());
     }
 
-    @Test(groups = "b", dependsOnGroups = "a")
     public void updateByExternalID() throws Exception {
         boolean result = imageDAO.updateItemByExternalID(new RESTItem("id123", "description_changed", "label_changed"));
         log.debug("result: " + result);
@@ -51,7 +57,6 @@ public class ItemDaoImplTest {
         Assert.assertEquals(RESTItem.toString().trim(), expected.trim());
     }
 
-    @Test(groups = "c", dependsOnGroups = "b")
     public void deleteByExternalID() throws Exception {
         boolean result = imageDAO.deleteItemByExternalID("id123");
         log.debug("result: " + result);
@@ -60,7 +65,6 @@ public class ItemDaoImplTest {
         Assert.assertNull(RESTItem);
     }
 
-    @Test(groups = "d", dependsOnGroups = "c")
     public void insertItem() throws Exception {
         RESTItem RESTItem = new RESTItem("345externalid", "new description", "another new label");
         RESTItem inserted = imageDAO.insertItem(RESTItem);
@@ -71,25 +75,5 @@ public class ItemDaoImplTest {
         Assert.assertEquals(inserted.toString().trim(), expected.trim());
         Assert.assertEquals(inserted.toString(), getJustCreatedRESTItem.toString());
         Assert.assertEquals(inserted, getJustCreatedRESTItem);
-
-        Map<String,RESTItem> itemMap = imageDAO.selectAll();
-        log.debug("itemMap: " + itemMap);
-        imageDAO.deleteItemByExternalID("345externalid");
-        RESTItem = imageDAO.getItemByExternalId("345externalid");
-        log.debug("RESTItem: " + RESTItem);
-        Assert.assertNull(RESTItem);
-
-        itemMap = imageDAO.selectAll();
-        log.debug("itemList: " + itemMap);
-        RESTItem = new RESTItem("id123","description","label");
-        inserted = imageDAO.insertItem(RESTItem);
-        getJustCreatedRESTItem = imageDAO.getItemByExternalId("id123");
-        log.debug("item2: " + getJustCreatedRESTItem + "\ninserted: " + inserted);
-        expected = "RESTItem{externalID=id123,description=description,label=label}";
-        Assert.assertEquals(getJustCreatedRESTItem.toString().trim(), expected.trim());
-        Assert.assertEquals(inserted.toString().trim(), expected.trim());
-        Assert.assertEquals(inserted.toString(), getJustCreatedRESTItem.toString());
-        Assert.assertEquals(inserted, getJustCreatedRESTItem);
-
     }
 }
