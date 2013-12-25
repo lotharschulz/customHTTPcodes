@@ -33,7 +33,7 @@ public class ItemDaoImplTest {
         imageDAO.clearItems();
     }
 
-
+    @Test
     public void selectAll() throws Exception {
         Map<String,RESTItem> itemMap = imageDAO.selectAll();
         log.debug("itemMap: " + itemMap);
@@ -41,6 +41,7 @@ public class ItemDaoImplTest {
         Assert.assertEquals(itemMap.toString().trim(), expected.trim());
     }
 
+    @Test
     public void selectbyExtID() throws Exception {
         RESTItem RESTItem = imageDAO.getItemByExternalId("id1234");
         log.debug("RESTItem: " + RESTItem);
@@ -48,6 +49,7 @@ public class ItemDaoImplTest {
         Assert.assertEquals(RESTItem.toString().trim(), expected.trim());
     }
 
+    @Test
     public void updateByExternalID() throws Exception {
         boolean result = imageDAO.updateItemByExternalID(new RESTItem("id123", "description_changed", "label_changed"));
         log.debug("result: " + result);
@@ -57,6 +59,7 @@ public class ItemDaoImplTest {
         Assert.assertEquals(RESTItem.toString().trim(), expected.trim());
     }
 
+    @Test
     public void deleteByExternalID() throws Exception {
         boolean result = imageDAO.deleteItemByExternalID("id123");
         log.debug("result: " + result);
@@ -65,6 +68,7 @@ public class ItemDaoImplTest {
         Assert.assertNull(RESTItem);
     }
 
+    @Test
     public void insertItem() throws Exception {
         RESTItem RESTItem = new RESTItem("345externalid", "new description", "another new label");
         RESTItem inserted = imageDAO.insertItem(RESTItem);
