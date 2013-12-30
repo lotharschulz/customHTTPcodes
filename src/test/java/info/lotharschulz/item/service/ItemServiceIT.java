@@ -1,10 +1,7 @@
 package info.lotharschulz.item.service;
 
-import info.lotharschulz.item.controller.ItemController;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
@@ -188,6 +185,7 @@ public class ItemServiceIT extends AbstractTestNGSpringContextTests {
 
     }
 
+    /*
     @Configuration
     public static class TestConfiguration {
 
@@ -197,5 +195,6 @@ public class ItemServiceIT extends AbstractTestNGSpringContextTests {
         }
 
     }
+    */
 
 }
