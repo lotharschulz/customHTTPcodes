@@ -185,16 +185,4 @@ public class ItemServiceIT extends AbstractTestNGSpringContextTests {
 
     }
 
-    /*
-    @Configuration
-    public static class TestConfiguration {
-
-        @Bean
-        public ItemController itemController() {
-            return new ItemController();
-        }
-
-    }
-    */
-
 }
