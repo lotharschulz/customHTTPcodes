@@ -187,16 +187,4 @@ public class ItemServiceIT {
 
     }
 
-/*
-    @Configuration
-    public static class TestConfiguration {
-
-        @Bean
-        public ItemController itemController() {
-            return new ItemController();
-        }
-
-    }
-*/
-
 }
