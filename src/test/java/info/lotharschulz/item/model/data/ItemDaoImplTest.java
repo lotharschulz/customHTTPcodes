@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.junit.*;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ItemDaoImplTest {
     private static final Logger log = Logger.getLogger(ItemDaoImplTest.class);
@@ -36,8 +37,11 @@ public class ItemDaoImplTest {
     public void selectAll() throws Exception {
         Map<String, RESTItem> itemMap = imageDAO.selectAll();
         log.debug("itemMap: " + itemMap);
-        String expected = "{id1234=RESTItem{externalID=id1234,description=description_2,label=another label}, id123=RESTItem{externalID=id123,description=description,label=label}}";
-        Assert.assertEquals(itemMap.toString().trim(), expected.trim());
+        TreeMap itemTreeMap = new TreeMap();
+        itemTreeMap.putAll(itemMap);
+        log.debug("itemTreeMap: " + itemTreeMap);
+        String expected = "{id123=RESTItem{externalID=id123,description=description,label=label}, id1234=RESTItem{externalID=id1234,description=description_2,label=another label}}";
+        Assert.assertEquals(itemTreeMap.toString().trim(), expected.trim());
     }
 
     @Test
