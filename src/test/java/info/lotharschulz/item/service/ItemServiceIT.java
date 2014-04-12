@@ -62,7 +62,6 @@ public class ItemServiceIT{
     @Test
     public void testItems() throws Exception {
         mockMvc.perform(get(basePath).accept(MediaType.APPLICATION_JSON))
-                //.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string("[{\"description\":\"description\",\"label\":\"label\",\"externalID\":\"id123\"}," +
@@ -80,7 +79,6 @@ public class ItemServiceIT{
     public void testNotExistingItem() throws Exception {
         String itemID = "whatever";
         mockMvc.perform(get(basePath + "{itemID}", itemID).accept(MediaType.APPLICATION_JSON))
-                //.andDo(print())
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.TEXT_PLAIN))
                 .andExpect(content().
@@ -94,7 +92,6 @@ public class ItemServiceIT{
         MvcResult result =
                 mockMvc.perform(put(basePath + "{itemID}", itemID).contentType(MediaType.APPLICATION_JSON)
                         .content("{\"label\":\"label_neu\",\"description\":\"lallallallalla neue description\"}"))
-                        //.andDo(print())
                         .andExpect(status().isSeeOther())
                         .andExpect(redirectedUrl(urlhttpPrefix + basePath + itemID))
                         .andReturn()
@@ -108,7 +105,6 @@ public class ItemServiceIT{
         String label = "label_neu";
         mockMvc.perform(put(basePath + "{itemID}", itemID).contentType(MediaType.APPLICATION_JSON)
                 .content("{\"label\":\"" + label + "\",\"description\":\"" + description + "\"}"))
-                //.andDo(print())
                 .andExpect(status().isCreated())
         ;
 
@@ -127,7 +123,6 @@ public class ItemServiceIT{
 
         mockMvc.perform(post(basePath + "{itemID}", itemID).contentType(MediaType.APPLICATION_JSON)
                 .content("{\"label\":\"" + newLabel + "\",\"description\":\"" + newDescription + "\"}"))
-                //.andDo(print())
                 .andExpect(status().isOk())
         ;
 
@@ -135,7 +130,6 @@ public class ItemServiceIT{
 
         mockMvc.perform(post(basePath + "{itemID}", itemID).contentType(MediaType.APPLICATION_JSON)
                 .content("{\"label\":\"" + existingLabel + "\",\"description\":\"" + existingDescription + "\"}"))
-                //.andDo(print())
                 .andExpect(status().isOk())
         ;
 
@@ -152,7 +146,6 @@ public class ItemServiceIT{
 
         mockMvc.perform(post(basePath + "{itemID}", itemID).contentType(MediaType.APPLICATION_JSON)
                 .content("{\"label\":\"" + newLabel + "\",\"description\":\"" + newDescription + "\"}"))
-                //.andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.TEXT_PLAIN))
                 .andExpect(content().
@@ -164,7 +157,6 @@ public class ItemServiceIT{
     private void testGet(String itemID, String descriptionLabel, String description, String labelLabel,
                          String label, String externalIDLabel) throws Exception {
         mockMvc.perform(get(basePath + "{itemID}", itemID).accept(MediaType.APPLICATION_JSON))
-                //.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string("{\"" + descriptionLabel + "\":\"" + description + "\",\"" +
