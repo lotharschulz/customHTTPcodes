@@ -6,41 +6,40 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.regex.Pattern;
-
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+
 @ContextConfiguration(locations = {"classpath:**/*exceptionDispatcher-servlet.xml"})
 @WebAppConfiguration
-public class ItemServiceIT {
+@RunWith(SpringJUnit4ClassRunner.class)
+public class ItemServiceIT{
 
-    @Autowired private WebApplicationContext ctx;
+    @Autowired
+    private WebApplicationContext ctx;
 
     private MockMvc mockMvc;
     private static final Logger log = Logger.getLogger(ItemServiceIT.class);
     private final String basePath = "/rest/v1/items/";
+    private final String urlhttpPrefix = "http://localhost";
     private final String descriptionLabel = "description";
     private final String labelLabel = "label";
 
     @Before
     public void setUp() {
         log.info("starting up IT tests");
-        this.mockMvc = webAppContextSetup(ctx).alwaysDo(print()).build();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).alwaysDo(print()).build();
     }
 
     @Test
@@ -52,6 +51,11 @@ public class ItemServiceIT {
     public void testItem123() throws Exception {
         String itemID = "id123";
         this.testGet(itemID, descriptionLabel,  "description", labelLabel, "label", "externalID");
+
+        // async Beispiel
+        // von https://gwtrepo.googlecode.com/svn/trunk/SpringAsyncWebStart/src/main/resources/archetype-resources/src/test/java/controller/TestDefaultController.java testDevice
+        //MvcResult mvcResult = mockMvc.perform(get(basePath + itemID).accept(MediaType.APPLICATION_JSON)).andExpect(request().asyncStarted()).andReturn();
+        //mockMvc.perform(asyncDispatch(mvcResult)).andExpect(status().isOk());
     }
 
     @Test
@@ -66,14 +70,14 @@ public class ItemServiceIT {
                 //.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().string("[{\"description\":\"description_2\",\"label\":\"another label\",\"externalID\":\"id1234\"}," +
-                        "{\"description\":\"description\",\"label\":\"label\",\"externalID\":\"id123\"}]"))
-                .andExpect(jsonPath("$..description[0]").value("description_2"))
-                .andExpect(jsonPath("$..label[0]").value("another label"))
-                .andExpect(jsonPath("$..externalID[0]").value("id1234"))
-                .andExpect(jsonPath("$..description[1]").value("description"))
-                .andExpect(jsonPath("$..label[1]").value("label"))
-                .andExpect(jsonPath("$..externalID[1]").value("id123"))
+                .andExpect(content().string("[{\"description\":\"description\",\"label\":\"label\",\"externalID\":\"id123\"}," +
+                        "{\"description\":\"description_2\",\"label\":\"another label\",\"externalID\":\"id1234\"}]"))
+                .andExpect(jsonPath("$..description[0]").value("description"))
+                .andExpect(jsonPath("$..label[0]").value("label"))
+                .andExpect(jsonPath("$..externalID[0]").value("id123"))
+                .andExpect(jsonPath("$..description[1]").value("description_2"))
+                .andExpect(jsonPath("$..label[1]").value("another label"))
+                .andExpect(jsonPath("$..externalID[1]").value("id1234"))
         ;
     }
 
@@ -97,19 +101,9 @@ public class ItemServiceIT {
                         .content("{\"label\":\"label_neu\",\"description\":\"lallallallalla neue description\"}"))
                         //.andDo(print())
                         .andExpect(status().isSeeOther())
+                        .andExpect(redirectedUrl(urlhttpPrefix + basePath + itemID))
                         .andReturn()
                 ;
-
-        // double check implementation below once spring 3.2.4 release is out
-        // urls
-        //   https://jira.springsource.org/browse/SPR-10789?page=com.atlassian.jira.plugin.system.issuetabpanels:changehistory-tabpanel
-        //   https://github.com/spring-projects/spring-test-mvc/issues/82
-        //   http://stackoverflow.com/questions/17834034/spring-mockmvc-redirectedurl-with-pattern
-
-        MockHttpServletResponse response = result.getResponse();
-        String location = response.getHeader("Location");
-        Pattern pattern = Pattern.compile(basePath + itemID);
-        assertTrue(pattern.matcher(location).find());
     }
 
     @Test
@@ -184,7 +178,6 @@ public class ItemServiceIT {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.label").value(label))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.externalID").value(itemID))
         ;
-
     }
 
 }
