@@ -51,11 +51,6 @@ public class ItemServiceIT{
     public void testItem123() throws Exception {
         String itemID = "id123";
         this.testGet(itemID, descriptionLabel,  "description", labelLabel, "label", "externalID");
-
-        // async Beispiel
-        // von https://gwtrepo.googlecode.com/svn/trunk/SpringAsyncWebStart/src/main/resources/archetype-resources/src/test/java/controller/TestDefaultController.java testDevice
-        //MvcResult mvcResult = mockMvc.perform(get(basePath + itemID).accept(MediaType.APPLICATION_JSON)).andExpect(request().asyncStarted()).andReturn();
-        //mockMvc.perform(asyncDispatch(mvcResult)).andExpect(status().isOk());
     }
 
     @Test
