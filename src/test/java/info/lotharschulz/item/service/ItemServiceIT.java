@@ -64,8 +64,6 @@ public class ItemServiceIT{
         mockMvc.perform(get(basePath).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().string("[{\"description\":\"description\",\"label\":\"label\",\"externalID\":\"id123\"}," +
-                        "{\"description\":\"description_2\",\"label\":\"another label\",\"externalID\":\"id1234\"}]"))
                 .andExpect(jsonPath("$..description[0]").value("description"))
                 .andExpect(jsonPath("$..label[0]").value("label"))
                 .andExpect(jsonPath("$..externalID[0]").value("id123"))
@@ -100,7 +98,7 @@ public class ItemServiceIT{
 
     @Test
     public void testCreateNewResource() throws Exception {
-        String itemID = "id12345678";
+        String itemID = "id1234a";
         String description = "lallallallalla neue description";
         String label = "label_neu";
         mockMvc.perform(put(basePath + "{itemID}", itemID).contentType(MediaType.APPLICATION_JSON)
