@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ItemDaoImplTest {
 
@@ -37,8 +38,11 @@ public class ItemDaoImplTest {
     public void selectAll() throws Exception {
         Map<String,RESTItem> itemMap = imageDAO.selectAll();
         log.debug("itemMap: " + itemMap);
-        String expected = "{id1234=RESTItem{externalID=id1234,description=description_2,label=another label}, id123=RESTItem{externalID=id123,description=description,label=label}}";
-        Assert.assertEquals(itemMap.toString().trim(), expected.trim());
+        TreeMap itemTreeMap = new TreeMap();
+        itemTreeMap.putAll(itemMap);
+        log.debug("itemTreeMap: " + itemTreeMap);
+        String expected = "{id123=RESTItem{externalID=id123,description=description,label=label}, id1234=RESTItem{externalID=id1234,description=description_2,label=another label}}";
+        Assert.assertEquals(itemTreeMap.toString().trim(), expected.trim());
     }
 
     @Test
