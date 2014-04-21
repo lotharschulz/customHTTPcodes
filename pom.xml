@@ -10,7 +10,7 @@
         <!-- <project.testng-version>6.8</project.testng-version> -->
         <project.junit.version>4.11</project.junit.version>
         <project.name>customHTTPcodes</project.name>
-        <project.spring.version>4.0.2.RELEASE</project.spring.version>
+        <project.spring.version>4.0.3.RELEASE</project.spring.version>
         <jsonpath.version>0.9.1</jsonpath.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
