@@ -1,6 +1,8 @@
 # custom HTTP status codes
 [![Build Status](https://travis-ci.org/lotharschulz/customHTTPcodes.svg)](https://travis-ci.org/lotharschulz/customHTTPcodes) [![Codacy Badge](https://api.codacy.com/project/badge/965cd16bf7b24bc8b03da568b36d679b)](https://www.codacy.com/app/lotharschulz/customHTTPcodes) [![Coverage Status](https://coveralls.io/repos/lotharschulz/customHTTPcodes/badge.svg?branch=featureBranch_testngTests&service=github)](https://coveralls.io/github/lotharschulz/customHTTPcodes?branch=featureBranch_testngTests) [![codecov.io](http://codecov.io/github/lotharschulz/customHTTPcodes/coverage.svg?branch=featureBranch_testngTests)](http://codecov.io/github/lotharschulz/customHTTPcodes?branch=featureBranch_testngTests)
-![codecov.io](http://codecov.io/github/lotharschulz/customHTTPcodes/branch.svg?branch=featureBranch_testngTests)
+
+[![Build Status](https://buildhive.cloudbees.com/job/lotharschulz/job/customHTTPcodes/badge/icon)](https://buildhive.cloudbees.com/job/lotharschulz/job/customHTTPcodes/) 
+![codecov.io](http://codecov.io/github/lotharschulz/customHTTPcodes/branch.svg?branch=master)
 
 sample code of "custom http status codes with spring" blog posts:
 
