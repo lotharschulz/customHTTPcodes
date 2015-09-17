@@ -1,4 +1,4 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/965cd16bf7b24bc8b03da568b36d679b)](https://www.codacy.com/app/lotharschulz/customHTTPcodes) [![Build Status](https://travis-ci.org/lotharschulz/customHTTPcodes.svg)](https://travis-ci.org/lotharschulz/customHTTPcodes)
+[![Build Status](https://travis-ci.org/lotharschulz/customHTTPcodes.svg)](https://travis-ci.org/lotharschulz/customHTTPcodes) [![Codacy Badge](https://api.codacy.com/project/badge/965cd16bf7b24bc8b03da568b36d679b)](https://www.codacy.com/app/lotharschulz/customHTTPcodes) [![Coverage Status](https://coveralls.io/repos/lotharschulz/customHTTPcodes/badge.svg?branch=master&service=github)](https://coveralls.io/github/lotharschulz/customHTTPcodes?branch=master)
 
 # custom HTTP status codes
 sample code of "custom http status codes with spring" blog posts:
