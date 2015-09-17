@@ -10,8 +10,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -87,7 +85,6 @@ public class ItemServiceIT{
     @Test
     public void testSeeOther() throws Exception {
         String itemID = "id123";
-        MvcResult result =
                 mockMvc.perform(put(basePath + "{itemID}", itemID).contentType(MediaType.APPLICATION_JSON)
                         .content("{\"label\":\"label_neu\",\"description\":\"lallallallalla neue description\"}"))
                         .andExpect(status().isSeeOther())
@@ -159,9 +156,9 @@ public class ItemServiceIT{
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string("{\"" + descriptionLabel + "\":\"" + description + "\",\"" +
                         labelLabel + "\":\"" + label + "\",\"" + externalIDLabel + "\":\"" + itemID + "\"}"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.description").value(description))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.label").value(label))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.externalID").value(itemID))
+                .andExpect(jsonPath("$.description").value(description))
+                .andExpect(jsonPath("$.label").value(label))
+                .andExpect(jsonPath("$.externalID").value(itemID))
         ;
     }
 
