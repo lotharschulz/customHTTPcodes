@@ -6,9 +6,7 @@ import info.lotharschulz.item.model.data.exception.ItemAlreadyExistsException;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /*
@@ -20,7 +18,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 public class ItemDaoImpl implements ItemDao {
 
     private static final Logger log = Logger.getLogger(ItemDaoImpl.class);
-    private List<RESTItem> myRESTItems = new ArrayList<RESTItem>(2);
 
     private HashMap<String, RESTItem> items = new HashMap<String, RESTItem>();
 
