@@ -1,5 +1,5 @@
 # custom HTTP status codes
-[![Travis Build Status](https://travis-ci.org/lotharschulz/customHTTPcodes.svg)](https://travis-ci.org/lotharschulz/customHTTPcodes) [![Codacy Badge](https://api.codacy.com/project/badge/965cd16bf7b24bc8b03da568b36d679b)](https://www.codacy.com/app/lotharschulz/customHTTPcodes) [![Apache 2](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![Codacy Badge](https://api.codacy.com/project/badge/965cd16bf7b24bc8b03da568b36d679b)](https://www.codacy.com/app/lotharschulz/customHTTPcodes) [![Apache 2](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 sample code of "custom http status codes with spring" blog posts:
 
