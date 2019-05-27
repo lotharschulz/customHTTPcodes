@@ -1,8 +1,5 @@
 # custom HTTP status codes
-[![Travis Build Status](https://travis-ci.org/lotharschulz/customHTTPcodes.svg)](https://travis-ci.org/lotharschulz/customHTTPcodes) ![https://circleci.com/gh/lotharschulz/customHTTPcodes.png?circle-token=d3bfcdb9b68ae242f8952c5c064596a1b19e99c2](https://circleci.com/gh/lotharschulz/customHTTPcodes.svg?style=shield&circle-token=d3bfcdb9b68ae242f8952c5c064596a1b19e99c2) [![Codacy Badge](https://api.codacy.com/project/badge/965cd16bf7b24bc8b03da568b36d679b)](https://www.codacy.com/app/lotharschulz/customHTTPcodes) [![Coverage Status](https://coveralls.io/repos/lotharschulz/customHTTPcodes/badge.svg?branch=master&service=github)](https://coveralls.io/github/lotharschulz/customHTTPcodes?branch=master) [![codecov.io](http://codecov.io/github/lotharschulz/customHTTPcodes/coverage.svg?branch=master)](http://codecov.io/github/lotharschulz/customHTTPcodes?branch=master) [![Apache 2](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-
-<!--- [![Build Status](https://buildhive.cloudbees.com/job/lotharschulz/job/customHTTPcodes/badge/icon)](https://buildhive.cloudbees.com/job/lotharschulz/job/customHTTPcodes/) -->
-![codecov.io](http://codecov.io/github/lotharschulz/customHTTPcodes/branch.svg?branch=master) 
+[![Travis Build Status](https://travis-ci.org/lotharschulz/customHTTPcodes.svg)](https://travis-ci.org/lotharschulz/customHTTPcodes) [![Codacy Badge](https://api.codacy.com/project/badge/965cd16bf7b24bc8b03da568b36d679b)](https://www.codacy.com/app/lotharschulz/customHTTPcodes) [![Apache 2](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 sample code of "custom http status codes with spring" blog posts:
 
